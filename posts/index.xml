@@ -2,18 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Enigmelo Blog</title>
-    <link>http://localhost:1313/posts/</link>
+    <link>https://crzphil.github.io/posts/</link>
     <description>Recent content in Posts on Enigmelo Blog</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 15 May 2024 14:33:31 +0300</lastBuildDate>
-    <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://crzphil.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Mypost</title>
-      <link>http://localhost:1313/posts/mypost/</link>
+      <title>Placeholder</title>
+      <link>https://crzphil.github.io/posts/mypost/</link>
       <pubDate>Wed, 15 May 2024 14:33:31 +0300</pubDate>
-      <guid>http://localhost:1313/posts/mypost/</guid>
-      <description>Testing print(1+1) </description>
+      <guid>https://crzphil.github.io/posts/mypost/</guid>
+      <description>Placeholder There&amp;rsquo;s something in the works&amp;hellip; Will be pushed here soon™.</description>
     </item>
   </channel>
 </rss>
