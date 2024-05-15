@@ -2,18 +2,25 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Enigmelo Blog</title>
-    <link>https://crzphil.github.io/</link>
+    <link>http://localhost:1313/</link>
     <description>Recent content on Enigmelo Blog</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 15 May 2024 14:33:31 +0300</lastBuildDate>
-    <atom:link href="https://crzphil.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Mypost</title>
-      <link>https://crzphil.github.io/posts/mypost/</link>
+      <title>Placeholder</title>
+      <link>http://localhost:1313/posts/mypost/</link>
       <pubDate>Wed, 15 May 2024 14:33:31 +0300</pubDate>
-      <guid>https://crzphil.github.io/posts/mypost/</guid>
-      <description>Testing print(1+1) </description>
+      <guid>http://localhost:1313/posts/mypost/</guid>
+      <description>Placeholder There&amp;rsquo;s something in the works&amp;hellip; Will be pushed here soon™.</description>
+    </item>
+    <item>
+      <title>About</title>
+      <link>http://localhost:1313/about/</link>
+      <pubDate>Wed, 15 May 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/about/</guid>
+      <description>I&amp;rsquo;m Philip, aka melo, and I do a little coding. This blog&amp;rsquo;s purpose is to host any disclosures and/or security research conducted by me, or other stuff that I feel worthy of sharing with the world. I&amp;rsquo;m currently working as a Content Engineer at Hack The Box.&#xA;You can also find me here:&#xA;HackTheBox: https://app.hackthebox.com/profile/458049 GitHub: https://github.com/CrzPhil LinkedIn: https://www.linkedin.com/in/philipgiavridis Twitter: https://twitter.com/enigmelo Contact I occasionally check this inbox: enigmelo86@gmail.com&#xA;Feeling Generous? Consider donating to The Tor Project: https://donate.</description>
     </item>
   </channel>
 </rss>
