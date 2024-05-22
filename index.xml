@@ -6,14 +6,14 @@
     <description>Recent content on Enigmelo Blog</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 15 May 2024 14:33:31 +0300</lastBuildDate>
+    <lastBuildDate>Tue, 21 May 2024 18:18:49 +0000</lastBuildDate>
     <atom:link href="https://crzphil.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Placeholder</title>
-      <link>https://crzphil.github.io/posts/mypost/</link>
-      <pubDate>Wed, 15 May 2024 14:33:31 +0300</pubDate>
-      <guid>https://crzphil.github.io/posts/mypost/</guid>
-      <description>Placeholder There&amp;rsquo;s something in the works&amp;hellip; Will be pushed here soon™.</description>
+      <title>HTB Business CTF - Swarm Writeup</title>
+      <link>https://crzphil.github.io/posts/swarm/</link>
+      <pubDate>Tue, 21 May 2024 18:18:49 +0000</pubDate>
+      <guid>https://crzphil.github.io/posts/swarm/</guid>
+      <description>&lt;p&gt;This is a writeup for my 2024 Hack The Box Business CTF FullPwn Machine, Swarm. While I was not initially planning on creating a dedicated writeup for the machine, it was brought to my attention that many players regarded the privilege escalation as ungodly. As such, I felt a responsibility to provide the traumatised players with a thorough explanation for my creation.&lt;/p&gt;</description>
     </item>
     <item>
       <title>About</title>
