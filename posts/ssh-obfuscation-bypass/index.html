@@ -29,7 +29,7 @@
   <meta itemprop="description" content="A disclosure for an OpenSSH keystroke obfuscation bypass affecting current OpenSSH versions after 9.4.">
   <meta itemprop="datePublished" content="2024-06-24T16:36:04+01:00">
   <meta itemprop="dateModified" content="2024-06-24T16:36:04+01:00">
-  <meta itemprop="wordCount" content="3104">
+  <meta itemprop="wordCount" content="2873">
   <meta itemprop="keywords" content="Ssh,Networking,Research,Bypass">
 
 
@@ -125,7 +125,7 @@
       <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-stopwatch-fill me-1" viewBox="0 0 16 16">
         <path d="M6.5 0a.5.5 0 0 0 0 1H7v1.07A7.001 7.001 0 0 0 8 16a7 7 0 0 0 5.29-11.584.531.531 0 0 0 .013-.012l.354-.354.353.354a.5.5 0 1 0 .707-.707l-1.414-1.415a.5.5 0 1 0-.707.707l.354.354-.354.354a.717.717 0 0 0-.012.012A6.973 6.973 0 0 0 9 2.071V1h.5a.5.5 0 0 0 0-1h-3zm2 5.6V9a.5.5 0 0 1-.5.5H4.5a.5.5 0 0 1 0-1h3V5.6a.5.5 0 1 1 1 0z"/>
       </svg>
-      15 min read
+      14 min read
     </span>
   
   
@@ -141,7 +141,7 @@
       <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-text-left me-1" viewBox="0 0 16 16">
         <path fill-rule="evenodd" d="M2 12.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/>
       </svg>
-      3104 words
+      2873 words
     </span>
   
 </div>
@@ -397,9 +397,6 @@
 <p><img src="./images/8e6251e0e412b9ae838ce9429366ad5a.png" alt=""></p>
 <p>Some of the results are summarised in this table:</p>
 <p><img src="./images/ab8893e363109a37ac43521741f22b76.png" alt=""></p>
-<p>As stated previously, the dataset at my disposal was quite small in size, which is also the reason why I created a second, personalised one, to showcase the impact of a targeted attack. However, even with the smaller participant dataset, certain commands could still be identified consistently with various algorithms. This was merely a PoC, highlighting that the metadata transmitted by SSH is too much for comfort. It is not unfeasible for actors with substantially more resources to leverage this on a much more impactful scale; network captures are essentially immutable, so once a session is observed and stored, it could eventually fall prey to more sophisticated attacks.</p>
-<h1 id="conclusion">Conclusion</h1>
-<p>In the conclusion of my thesis, I also highlighted that for future work, such approaches could include incorporating additional metadata and context into the analysis. For instance, the sizes of the responses returned by the server for each command sequence could tighten the scope of commands to be considered for each keystroke sequence. Additionally, one can infer certain parameters like the CWD&rsquo;s path length (or the current username) by looking at the length of the CLI prompt packet returned by the server after each command. There are a lot of unexplored ways to work with this metadata, but the important thing is that most would have been muzzled by the patch introduced in <code>9.5</code>, which is great, provided the developers address it.</p>
 
         </div>
       </div>
