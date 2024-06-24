@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on Enigmelo Blog</title>
-    <link>https://crzphil.github.io/posts/</link>
-    <description>Recent content in Posts on Enigmelo Blog</description>
+    <title>Ssh on Enigmelo Blog</title>
+    <link>https://crzphil.github.io/tags/ssh/</link>
+    <description>Recent content in Ssh on Enigmelo Blog</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 24 Jun 2024 16:36:04 +0100</lastBuildDate>
-    <atom:link href="https://crzphil.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://crzphil.github.io/tags/ssh/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>SSH Keystroke Obfuscation Bypass</title>
       <link>https://crzphil.github.io/posts/ssh-obfuscation-bypass/</link>
@@ -21,13 +21,6 @@
       <pubDate>Mon, 24 Jun 2024 00:00:00 +0000</pubDate>
       <guid>https://crzphil.github.io/posts/sshniff/</guid>
       <description>SSHniff: An SSH Metadata Analyser As part of my final-year bachelor research project, I took a stab at determining how feasible a metadata-based attack on the SSH protocol is nowadays. This type of attack was first introduced in 2001, in a paper called &amp;ldquo;Timing Analysis of Keystrokes and Timing Attacks on SSH&amp;rdquo;. It is based on the fact that interactive SSH sessions leak significant metadata. Keystrokes, while encrypted, are sent to and echoed by the server individually.</description>
-    </item>
-    <item>
-      <title>HTB Business CTF - Swarm Writeup</title>
-      <link>https://crzphil.github.io/posts/swarm/</link>
-      <pubDate>Tue, 21 May 2024 18:18:49 +0000</pubDate>
-      <guid>https://crzphil.github.io/posts/swarm/</guid>
-      <description>&lt;p&gt;This is a writeup for my 2024 Hack The Box Business CTF FullPwn Machine, Swarm. While I was not initially planning on creating a dedicated writeup for the machine, it was brought to my attention that many players regarded the privilege escalation as ungodly. As such, I felt a responsibility to provide the traumatised players with a thorough explanation for my creation.&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>
