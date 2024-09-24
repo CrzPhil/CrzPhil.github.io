@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Bypass on Enigmelo Blog</title>
-    <link>https://crzphil.github.io/tags/bypass/</link>
+    <link>http://localhost:1313/tags/bypass/</link>
     <description>Recent content in Bypass on Enigmelo Blog</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 24 Jun 2024 16:36:04 +0100</lastBuildDate>
-    <atom:link href="https://crzphil.github.io/tags/bypass/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/bypass/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>SSH Keystroke Obfuscation Bypass</title>
-      <link>https://crzphil.github.io/posts/ssh-obfuscation-bypass/</link>
+      <link>http://localhost:1313/posts/ssh-obfuscation-bypass/</link>
       <pubDate>Mon, 24 Jun 2024 16:36:04 +0100</pubDate>
-      <guid>https://crzphil.github.io/posts/ssh-obfuscation-bypass/</guid>
+      <guid>http://localhost:1313/posts/ssh-obfuscation-bypass/</guid>
       <description>Introduction OpenSSH version 9.5 introduced measures to mitigate a keystroke timing attack via traffic analysis. The patch involved adding keystroke timing obfuscation to the SSH client. As per the release notes, this feature “attempts to hide inter-keystroke timings by sending interactive traffic at fixed intervals (default: every 20ms) when there is only a small amount of data being sent”. Additionally, fake chaff packets are sent after the last real keystroke, significantly complicating traffic analysis by shrouding the real keystrokes in a stream of impostors.</description>
     </item>
   </channel>
