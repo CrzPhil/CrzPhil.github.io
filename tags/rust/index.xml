@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Rust on Enigmelo Blog</title>
-    <link>http://localhost:1313/tags/rust/</link>
+    <link>https://crzphil.github.io/tags/rust/</link>
     <description>Recent content in Rust on Enigmelo Blog</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 24 Jun 2024 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/rust/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://crzphil.github.io/tags/rust/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>SSHniff</title>
-      <link>http://localhost:1313/posts/sshniff/</link>
+      <link>https://crzphil.github.io/posts/sshniff/</link>
       <pubDate>Mon, 24 Jun 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/sshniff/</guid>
+      <guid>https://crzphil.github.io/posts/sshniff/</guid>
       <description>SSHniff: An SSH Metadata Analyser As part of my final-year bachelor research project, I took a stab at determining how feasible a metadata-based attack on the SSH protocol is nowadays. This type of attack was first introduced in 2001, in a paper called &amp;ldquo;Timing Analysis of Keystrokes and Timing Attacks on SSH&amp;rdquo;. It is based on the fact that interactive SSH sessions leak significant metadata. Keystrokes, while encrypted, are sent to and echoed by the server individually.</description>
     </item>
   </channel>

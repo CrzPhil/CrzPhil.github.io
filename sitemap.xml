@@ -2,64 +2,64 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313/tags/bypass/</loc>
+    <loc>https://crzphil.github.io/tags/bypass/</loc>
     <lastmod>2024-06-24T16:36:04+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/</loc>
+    <loc>https://crzphil.github.io/</loc>
     <lastmod>2024-06-24T16:36:04+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/networking/</loc>
+    <loc>https://crzphil.github.io/tags/networking/</loc>
     <lastmod>2024-06-24T16:36:04+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/</loc>
+    <loc>https://crzphil.github.io/posts/</loc>
     <lastmod>2024-06-24T16:36:04+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/research/</loc>
+    <loc>https://crzphil.github.io/tags/research/</loc>
     <lastmod>2024-06-24T16:36:04+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/ssh/</loc>
+    <loc>https://crzphil.github.io/tags/ssh/</loc>
     <lastmod>2024-06-24T16:36:04+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/ssh-obfuscation-bypass/</loc>
+    <loc>https://crzphil.github.io/posts/ssh-obfuscation-bypass/</loc>
     <lastmod>2024-06-24T16:36:04+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/</loc>
+    <loc>https://crzphil.github.io/tags/</loc>
     <lastmod>2024-06-24T16:36:04+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/rust/</loc>
+    <loc>https://crzphil.github.io/tags/rust/</loc>
     <lastmod>2024-06-24T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/sshniff/</loc>
+    <loc>https://crzphil.github.io/posts/sshniff/</loc>
     <lastmod>2024-06-24T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/business-ctf/</loc>
+    <loc>https://crzphil.github.io/tags/business-ctf/</loc>
     <lastmod>2024-05-21T18:18:49+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/</loc>
+    <loc>https://crzphil.github.io/categories/</loc>
     <lastmod>2024-05-21T18:18:49+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/docker/</loc>
+    <loc>https://crzphil.github.io/categories/docker/</loc>
     <lastmod>2024-05-21T18:18:49+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/htb/</loc>
+    <loc>https://crzphil.github.io/tags/htb/</loc>
     <lastmod>2024-05-21T18:18:49+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/htb/</loc>
+    <loc>https://crzphil.github.io/categories/htb/</loc>
     <lastmod>2024-05-21T18:18:49+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/swarm/</loc>
+    <loc>https://crzphil.github.io/posts/swarm/</loc>
     <lastmod>2024-05-21T18:18:49+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/swarm/</loc>
+    <loc>https://crzphil.github.io/tags/swarm/</loc>
     <lastmod>2024-05-21T18:18:49+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/writeup/</loc>
+    <loc>https://crzphil.github.io/tags/writeup/</loc>
     <lastmod>2024-05-21T18:18:49+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/writeups/</loc>
+    <loc>https://crzphil.github.io/categories/writeups/</loc>
     <lastmod>2024-05-21T18:18:49+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/about/</loc>
+    <loc>https://crzphil.github.io/about/</loc>
     <lastmod>2024-05-15T00:00:00+00:00</lastmod>
   </url>
 </urlset>
