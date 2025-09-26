@@ -13,7 +13,7 @@
       <link>https://crzphil.github.io/posts/ssh-obfuscation-bypass/</link>
       <pubDate>Mon, 24 Jun 2024 16:36:04 +0100</pubDate>
       <guid>https://crzphil.github.io/posts/ssh-obfuscation-bypass/</guid>
-      <description>Introduction OpenSSH version 9.5 introduced measures to mitigate a keystroke timing attack via traffic analysis. The patch involved adding keystroke timing obfuscation to the SSH client. As per the release notes, this feature “attempts to hide inter-keystroke timings by sending interactive traffic at fixed intervals (default: every 20ms) when there is only a small amount of data being sent”. Additionally, fake chaff packets are sent after the last real keystroke, significantly complicating traffic analysis by shrouding the real keystrokes in a stream of impostors.</description>
+      <description>&lt;h1 id=&#34;introduction&#34;&gt;Introduction&lt;/h1&gt;&#xA;&lt;p&gt;OpenSSH version &lt;code&gt;9.5&lt;/code&gt; introduced measures to mitigate a keystroke timing attack via traffic analysis. The patch involved adding keystroke timing obfuscation to the SSH client. As per the release notes, this feature “&lt;em&gt;attempts to hide inter-keystroke timings by sending interactive traffic at fixed intervals (default: every 20ms) when there is only a small amount of data being sent&lt;/em&gt;”. Additionally, fake &lt;code&gt;chaff&lt;/code&gt; packets are sent after the last real keystroke, significantly complicating traffic analysis by shrouding the real keystrokes in a stream of impostors. The feature can be controlled and disabled via the &lt;code&gt;ObscureKeystrokeTiming&lt;/code&gt; option in the SSH config.&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

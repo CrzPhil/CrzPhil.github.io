@@ -13,7 +13,7 @@
       <link>https://crzphil.github.io/posts/sshniff/</link>
       <pubDate>Mon, 24 Jun 2024 00:00:00 +0000</pubDate>
       <guid>https://crzphil.github.io/posts/sshniff/</guid>
-      <description>SSHniff: An SSH Metadata Analyser As part of my final-year bachelor research project, I took a stab at determining how feasible a metadata-based attack on the SSH protocol is nowadays. This type of attack was first introduced in 2001, in a paper called &amp;ldquo;Timing Analysis of Keystrokes and Timing Attacks on SSH&amp;rdquo;. It is based on the fact that interactive SSH sessions leak significant metadata. Keystrokes, while encrypted, are sent to and echoed by the server individually.</description>
+      <description>&lt;h1 id=&#34;sshniff-an-ssh-metadata-analyser&#34;&gt;SSHniff: An SSH Metadata Analyser&lt;/h1&gt;&#xA;&lt;p&gt;As part of my final-year bachelor research project, I took a stab at determining how feasible a metadata-based attack on the SSH protocol is nowadays. This type of attack was first introduced in 2001, in a paper called &amp;ldquo;&lt;em&gt;Timing Analysis of Keystrokes and Timing Attacks on SSH&lt;/em&gt;&amp;rdquo;. It is based on the fact that interactive SSH sessions leak significant metadata. Keystrokes, while encrypted, are sent to and echoed by the server individually.&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>
